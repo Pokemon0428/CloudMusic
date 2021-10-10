@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="header" @click="changeTheme">
     <div class="header-left"></div>
     <p class="header-title">网易云音乐</p>
     <div class="header-right"></div>
@@ -9,6 +9,21 @@
 <script>
 export default {
   name: "Header",
+  data() {
+    return {
+      themes: ['theme', 'theme1', 'theme2'],
+      index: 0
+    };
+  },
+  methods: {
+    changeTheme () {
+      this.index++
+      if (this.index >= this.themes.length) {
+        this.index = 0
+      }
+      document.documentElement.setAttribute('data-theme', this.themes[this.index])
+    }
+  },
 }
 </script>
 
@@ -26,9 +41,17 @@ export default {
       height: 84px;
       margin-top: 8px;
     }
+    .header-left {
+      @include bg_img('../assets/images/logo')
+    }.header-right {
+      @include bg_img('../assets/images/account')
+    }
     .header-title {
+      color: #fff;
+      font-weight: bold;
       text-align: center;
       line-height: 100px;
+      @include font_size($font_medium)
     }
   }
 </style>
