@@ -3,11 +3,12 @@
     <ScrollView>
       <div>
         <Banner :banners="banners"></Banner>
-        <Personalized :personalized="personalized" :title="'推荐歌单'"></Personalized>
+        <Personalized :personalized="personalized" :title="'推荐歌单'" @select="fatherSelectItem"></Personalized>
         <Personalized :personalized="albums" :title="'最新专辑'"></Personalized>
         <NewSongs :songs="songs"></NewSongs>
       </div>
     </ScrollView>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -84,7 +85,11 @@ export default {
   },
 
   methods: {
-    
+    fatherSelectItem(id) {
+      this.$router.push({
+        path: `/recommend/detail/${id}`
+      })
+    }
   },
 };
 </script>
