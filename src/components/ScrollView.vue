@@ -57,7 +57,12 @@ export default {
   },
 
   methods: {
-    
+    // 提供一个监听滚动距离的方法给外界使用
+    scrolling (fn) {
+      this.iscroll.on('scroll', function () {
+        fn(this.y)
+      })
+    }
   },
 };
 </script>

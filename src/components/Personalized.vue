@@ -34,6 +34,12 @@ export default {
       default: '' ,
       // 定义该 prop 是否是必填项
       required: true
+    },
+    type: {
+      type: String,
+      default: '' ,
+      // 定义该 prop 是否是必填项
+      required: true
     }
   },
 
@@ -43,7 +49,7 @@ export default {
 
   methods: {
     selectItem(id) {
-      this.$emit('select', id)
+      this.$emit('select', id, this.type)
     }
   },
 };
