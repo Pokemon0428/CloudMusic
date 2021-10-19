@@ -40,7 +40,7 @@ export default {
       }).catch(function (err) {
         console.log(err)
       })
-    } else if (this.$route.params.type === 'albums') {
+    } else if (this.$route.params.type === 'album') {
       getAlbum({id: this.$route.params.id}).then((data) => {
         console.log(data)
         this.playlist = {

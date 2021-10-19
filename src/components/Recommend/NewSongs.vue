@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import SongList from './SongList.vue'
+import SongList from '../SongList.vue'
 export default {
   name: 'Newsongs',
   components: {
@@ -39,8 +39,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/css/mixin";
-  @import "../assets/css/variable";
+@import "../../assets/css/mixin";
+  @import "../../assets/css/variable";
 .song{
   width: 100%;
   @include bg_sub_color();

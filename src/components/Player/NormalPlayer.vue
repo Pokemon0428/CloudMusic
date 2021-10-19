@@ -1,0 +1,74 @@
+<template>
+  <div class="normal-player">
+    <div class="player-warpper">
+      <PlayerHeader></PlayerHeader>
+      <PlayerMiddle></PlayerMiddle>
+      <PlayerBottom></PlayerBottom>
+    </div>
+    <div class="player-bg">
+      <img src="https://wx3.sinaimg.cn/orj360/001R0E0aly1gvkgcgpuz7j612y0u07de02.jpg" alt="">
+    </div>
+  </div>
+</template>
+
+<script>
+import PlayerHeader from "./PlayerHeader.vue"
+import PlayerMiddle from "./PlayerMiddle.vue"
+import PlayerBottom from "./PlayerBottom.vue"
+export default {
+  name: 'NormalPlayer',
+  components: {
+    PlayerHeader,
+    PlayerMiddle,
+    PlayerBottom
+  },
+
+  data() {
+    return {
+      
+    };
+  },
+
+  mounted() {
+    
+  },
+
+  methods: {
+    
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+  @import "../../assets/css/variable.scss";
+  @import "../../assets/css/mixin.scss";
+  .normal-player {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    @include bg_sub_color();
+    .player-warpper {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      z-index: 999;
+    }
+    .player-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      img {
+        height: 100%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        filter: blur(10px);
+      }
+    }
+  }
+</style>

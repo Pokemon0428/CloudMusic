@@ -68,7 +68,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "../assets/css/mixin.scss";
+  @import "../../assets/css/mixin.scss";
   .banner {
     .item {
       img {
@@ -79,7 +79,7 @@ export default {
   }
 </style>
 <style lang="scss">
-  @import "../assets/css/mixin";
+  @import "../../assets/css/mixin";
   /*注意点: 如果想覆盖swiper的样式, 那么style标签不能是scoped的, 否则无法覆盖*/
 .banner{
   position: relative;

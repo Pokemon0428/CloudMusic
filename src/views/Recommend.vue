@@ -18,9 +18,9 @@
 
 <script>
 import {getBanner, getPersonalized, getNewAlbum, getNewSong} from "../api/index"
-import Banner from '../components/Banner.vue'
-import Personalized from '../components/Personalized.vue'
-import NewSongs from '../components/NewSongs'
+import Banner from '../components/Recommend/Banner.vue'
+import Personalized from '../components/Recommend/Personalized.vue'
+import NewSongs from '../components/Recommend/NewSongs'
 import ScrollView from '../components/ScrollView'
 export default {
   name: 'Recommend',
