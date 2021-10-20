@@ -4,7 +4,7 @@
       <div class="bottom-icon"></div>
       <div class="bottom-title">播放全部</div>
     </li>
-    <li v-for="value in playlist" :key="value.id" class="item">
+    <li v-for="value in playlist" :key="value.id" class="item" @click="selectMusic">
       <h3>{{value.name}}</h3>
       <p>{{value.al.name}} - {{value.ar[0].name}}</p>
     </li>
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Detailbottom',
 
@@ -26,7 +27,12 @@ export default {
   },
 
   methods: {
-    
+    ...mapActions([
+      'setFullScreen'
+    ]),
+    selectMusic () {
+      this.setFullScreen(true)
+    }
   },
 
   props: {

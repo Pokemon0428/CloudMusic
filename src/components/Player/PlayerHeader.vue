@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="header-left"></div>
+    <div class="header-left" @click="hiddenNormalPlayer"></div>
     <div class="header-title">
       <h3>演员</h3>
       <p>薛之谦</p>
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'PlayerHeader',
 
@@ -28,7 +29,14 @@ export default {
   },
 
   methods: {
-    
+    ...mapActions([
+      'setFullScreen',
+      'setMiniPlayer'
+    ]),
+    hiddenNormalPlayer () {
+      this.setFullScreen(false)
+      this.setMiniPlayer(true)
+    }
   },
 };
 </script>

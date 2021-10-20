@@ -1,40 +1,47 @@
 <template>
-  <div class="list-player">
-    <div class="player-warpper">
-      <div class="player-top">
-        <div class="top-left">
-          <div class="mode"></div>
-          <p>顺序播放</p>
+  <transition
+  :css="false"
+  @enter="enter"
+  @leave="leave"
+  >
+    <div class="list-player" v-show="isShow">
+      <div class="player-warpper">
+        <div class="player-top">
+          <div class="top-left">
+            <div class="mode"></div>
+            <p>顺序播放</p>
+          </div>
+          <div class="top-right">
+            <div class="del"></div>
+          </div>
         </div>
-        <div class="top-right">
-          <div class="del"></div>
+        <div class="player-middle">
+          <ScrollView>
+            <ul>
+              <li class="item">
+                <div class="item-left">
+                  <div class="item-play" ref="play" @click="play"></div>
+                  <p>演员</p>
+                </div>
+                <div class="item-right">
+                  <div class="item-favorite"></div>
+                  <div class="item-del"></div>
+                </div>
+              </li>
+            </ul>
+          </ScrollView>
         </div>
-      </div>
-      <div class="player-middle">
-        <ScrollView>
-          <ul>
-            <li class="item">
-              <div class="item-left">
-                <div class="item-play"></div>
-                <p>演员</p>
-              </div>
-              <div class="item-right">
-                <div class="item-favorite"></div>
-                <div class="item-del"></div>
-              </div>
-            </li>
-          </ul>
-        </ScrollView>
-      </div>
-      <div class="player-bottom">
-        <p>关闭</p>
+        <div class="player-bottom">
+          <p @click.stop="hidden">关闭</p>
+        </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
 import ScrollView from '../ScrollView.vue'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'ListPlayer',
   components: {
@@ -43,17 +50,52 @@ export default {
 
   data() {
     return {
-      
+      isShow: false,
     };
   },
 
   mounted() {
     
   },
+  computed: {
+    ...mapGetters([
+      'isPlaying'
+    ])
+  },
 
   methods: {
-    
+    ...mapActions([
+      'setIsPlaying'
+    ]),
+    show() {
+      this.isShow = true
+    },
+    hidden() {
+      this.isShow = false
+    },
+    enter (el, done) {
+      Velocity(el, 'transition.perspectiveUpIn', { duration: 500 }, function () {
+        done()
+      })
+    },
+    leave (el, done) {
+      Velocity(el, 'transition.perspectiveUpOut', { duration: 500 }, function () {
+        done()
+      })
+    },
+    play () {
+      this.setIsPlaying(!this.isPlaying)
+    }
   },
+  watch: {
+    isPlaying (newValue, oldValue) {
+      if (newValue) {
+        this.$refs.play.classList.add('active')
+      } else {
+        this.$refs.play.classList.remove('active')
+      }
+    }
+  }
 };
 </script>
 
@@ -113,7 +155,10 @@ export default {
                width: 56px;
               height: 56px;
               margin-right: 20px;
-              @include bg_img('../../assets/images/small_play');
+              @include bg_img('../../assets/images/small_pause');
+              &.active {
+                @include bg_img('../../assets/images/small_play');
+              }
             }
             p{
               width: 80%;

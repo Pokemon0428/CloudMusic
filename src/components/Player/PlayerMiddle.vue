@@ -10,7 +10,7 @@
     <swiper-slide class="lyric" ref="lyric">
       <ScrollView ref="scrollView">
         <ul>
-          <li v-for="(value, key) in currentLyric" :key="key" :class="{'active' : currentLineNum === key}">{{value}}</li>
+          <!-- <li v-for="(value, key) in currentLyric" :key="key" :class="{'active' : currentLineNum === key}">{{value}}</li> -->
         </ul>
       </ScrollView>
     </swiper-slide>
