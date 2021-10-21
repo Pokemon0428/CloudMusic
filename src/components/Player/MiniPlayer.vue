@@ -7,7 +7,7 @@
     <div class="mini-player" v-show="this.isShowMiniPlayer">
     <div class="player-warpper">
       <div class="player-left" @click="showNormalPlayer">
-        <img src="https://wx3.sinaimg.cn/orj360/001R0E0aly1gvkgcgpuz7j612y0u07de02.jpg" alt="">
+        <img src="https://wx3.sinaimg.cn/orj360/001R0E0aly1gvkgcgpuz7j612y0u07de02.jpg" ref="cd">
         <div class="player-title">
           <h3>演员</h3>
           <p>薛之谦</p>
@@ -36,10 +36,11 @@ export default {
     ...mapActions([
       'setFullScreen',
       'setMiniPlayer',
-      'setIsPlaying'
+      'setListPlayer',
+      'setIsPlaying',
     ]),
     showList() {
-      this.$emit('showList');
+      this.setListPlayer(true)
     },
     showNormalPlayer () {
       this.setFullScreen(true)
@@ -69,8 +70,10 @@ export default {
     isPlaying (newValue, oldValue) {
       if (newValue) {
         this.$refs.play.classList.add('active')
+        this.$refs.cd.classList.add('active')
       } else {
         this.$refs.play.classList.remove('active')
+        this.$refs.cd.classList.remove('active')
       }
     }
   }
@@ -101,6 +104,11 @@ export default {
           height: 100px;
           border-radius: 50%;
           margin-right: 20px;
+          animation: sport 3s linear infinite;
+          animation-play-state: paused;
+          &.active {
+            animation-play-state: running;
+          }
         }
         .player-title {
           display: flex;
@@ -123,9 +131,9 @@ export default {
         .play {
           width: 84px;
           height: 84px;
-          @include bg_img('../../assets/images/pause');
+          @include bg_img('../../assets/images/play');
           &.active {
-            @include bg_img('../../assets/images/play');
+            @include bg_img('../../assets/images/pause');
           }
         }
         .list {
@@ -134,6 +142,15 @@ export default {
           @include bg_img('../../assets/images/list')
         }
       }
+    }
+  }
+
+  @keyframes sport {
+    from {
+      transform: rotate(0deg)
+    }
+    to {
+      transform: rotate(360deg)
     }
   }
 </style>

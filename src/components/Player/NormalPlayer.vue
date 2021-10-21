@@ -11,7 +11,7 @@
       <PlayerBottom></PlayerBottom>
     </div>
     <div class="player-bg">
-      <img src="https://wx3.sinaimg.cn/orj360/001R0E0aly1gvkgcgpuz7j612y0u07de02.jpg" alt="">
+      <img :src="currentSong.picUrl" alt="">
     </div>
   </div>
 </transition>
@@ -36,21 +36,14 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'isFullScreen'
+      'isFullScreen',
+      'currentSong'
     ])
   },
-
-  data() {
-    return {
-      
-    };
-  },
-
-  mounted() {
-    
-  },
-
   methods: {
+    ...mapActions([
+      'getSongLyric'
+    ]),
     enter (el, done) {
       Velocity(el, 'transition.shrinkIn', { duration: 500 }, function () {
         done()
@@ -62,6 +55,14 @@ export default {
       })
     }
   },
+  watch: {
+    currentSong (newValue, oldValue) {
+      if (newValue.id === undefined) {
+        return
+      }
+      this.getSongLyric(newValue.id)
+    }
+  }
 };
 </script>
 

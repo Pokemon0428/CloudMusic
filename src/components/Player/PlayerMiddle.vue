@@ -2,8 +2,8 @@
   <swiper :options="swiperOption" class="banner">
     <!-- slides -->
     <swiper-slide class="cd">
-      <div class="cd-wrapper" ref="cdWrapper">
-        <img src="https://wx3.sinaimg.cn/orj360/001R0E0aly1gvkgcgpuz7j612y0u07de02.jpg" alt="">
+      <div class="cd-wrapper" ref="cdWarpper">
+        <img :src="currentSong.picUrl" alt="">
       </div>
       <p>65456asadaasdasdasdasdasd</p>
     </swiper-slide>
@@ -23,6 +23,7 @@
 import 'swiper/swiper-bundle.css'
 import { swiper, swiperSlide} from 'vue-awesome-swiper'
 import ScrollView from '../ScrollView'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'PlayerMiddle',
   components: {
@@ -30,7 +31,6 @@ export default {
     swiperSlide,
     ScrollView
   },
-
   data() {
     return {
       swiperOption: {
@@ -46,14 +46,21 @@ export default {
       },
     };
   },
-
-  mounted() {
-    
+  computed: {
+    ...mapGetters([
+      'isPlaying',
+      'currentSong'
+    ])
   },
-
-  methods: {
-    
-  },
+  watch: {
+    isPlaying(newValue, oldValue) {
+      if (newValue) {
+        this.$refs.cdWarpper.classList.add("active")
+      } else {
+        this.$refs.cdWarpper.classList.remove("active")
+      }
+    }
+  }
 };
 </script>
 
@@ -75,6 +82,11 @@ export default {
         border-radius: 50%;
         border: 30px solid #fff;
         overflow: hidden;
+        animation: sport 3s linear infinite;
+        animation-play-state: paused;
+        &.active {
+          animation-play-state: running;
+        }
         img {
           width: 100%;
           height: 100%;
@@ -100,6 +112,15 @@ export default {
           color: #fff;
         }
       }
+    }
+  }
+
+  @keyframes sport {
+    from {
+      transform: rotate(0deg)
+    }
+    to {
+      transform: rotate(360deg)
     }
   }
 </style>

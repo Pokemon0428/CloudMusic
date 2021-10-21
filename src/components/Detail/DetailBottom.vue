@@ -4,7 +4,7 @@
       <div class="bottom-icon"></div>
       <div class="bottom-title">播放全部</div>
     </li>
-    <li v-for="value in playlist" :key="value.id" class="item" @click="selectMusic">
+    <li v-for="value in playlist" :key="value.id" class="item" @click="selectMusic(value.id)">
       <h3>{{value.name}}</h3>
       <p>{{value.al.name}} - {{value.ar[0].name}}</p>
     </li>
@@ -28,10 +28,12 @@ export default {
 
   methods: {
     ...mapActions([
-      'setFullScreen'
+      'setFullScreen',
+      'setSongDetaile'
     ]),
-    selectMusic () {
+    selectMusic (id) {
       this.setFullScreen(true)
+      this.setSongDetaile([id])
     }
   },
 

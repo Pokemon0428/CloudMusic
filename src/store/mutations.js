@@ -1,7 +1,18 @@
 import {
   SET_FULL_SCREEN,
   SET_MINI_PLAYER,
-  SET_IS_PLAYING
+  SET_LIST_PLAYER,
+  SET_IS_PLAYING,
+  SET_MODE_TYPE,
+  SET_SONG_DETAIL,
+  SET_SONG_LYRIC,
+  SET_DEL_SONG,
+  SET_CURRENT_INDEX,
+  SET_CURRENT_TIME,
+  SET_FAVORITE_SONG,
+  SET_FAVORITE_LIST,
+  SET_HISTORY_SONG,
+  SET_HISTORY_LIST
 } from './mutations-type'
 
 export default {
@@ -17,7 +28,22 @@ export default {
     state.isShowMiniPlayer = flag
   },
 
+  [SET_LIST_PLAYER] (state, flag) {
+    state.isShowListPlayer = flag
+  },
+
   [ SET_IS_PLAYING] (state, flag) {
     state.isPlaying = flag
+  },
+
+  [SET_MODE_TYPE] (state, flag) {
+    state.modeType = flag
+  },
+
+  [SET_SONG_DETAIL] (state, list) {
+    state.songs = list
+  },
+  [SET_SONG_LYRIC] (state, lyric) {
+    state.currentLyric = lyric
   },
 }

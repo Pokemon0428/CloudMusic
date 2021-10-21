@@ -35,14 +35,12 @@ export default {
   created() {
     if (this.$route.params.type === 'personalized') {
       getPlayList({id: this.$route.params.id}).then((data) => {
-        console.log(data.playlist.tracks)
         this.playlist = data.playlist
       }).catch(function (err) {
         console.log(err)
       })
     } else if (this.$route.params.type === 'album') {
       getAlbum({id: this.$route.params.id}).then((data) => {
-        console.log(data)
         this.playlist = {
           name: data.album.name,
           coverImgUrl: data.album.picUrl,
