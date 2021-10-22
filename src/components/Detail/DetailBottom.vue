@@ -1,6 +1,6 @@
 <template>
   <ul class="detail-bottom">
-    <li class="bottom-top">
+    <li class="bottom-top" @click="selectAllMusic">
       <div class="bottom-icon"></div>
       <div class="bottom-title">播放全部</div>
     </li>
@@ -29,11 +29,19 @@ export default {
   methods: {
     ...mapActions([
       'setFullScreen',
-      'setSongDetaile'
+      'setSongDetail',
+      'setMiniPlayer'
     ]),
     selectMusic (id) {
       this.setFullScreen(true)
-      this.setSongDetaile([id])
+      this.setSongDetail([id])
+    },
+    selectAllMusic () {
+      this.setFullScreen(true)
+      let ids = this.playlist.map(function (item) {
+        return item.id
+      })
+      this.setSongDetail(ids)
     }
   },
 

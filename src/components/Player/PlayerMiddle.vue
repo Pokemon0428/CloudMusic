@@ -5,12 +5,12 @@
       <div class="cd-wrapper" ref="cdWarpper">
         <img :src="currentSong.picUrl" alt="">
       </div>
-      <p>65456asadaasdasdasdasdasd</p>
+      <p>{{getFirstLyric()}}</p>
     </swiper-slide>
     <swiper-slide class="lyric" ref="lyric">
       <ScrollView ref="scrollView">
         <ul>
-          <!-- <li v-for="(value, key) in currentLyric" :key="key" :class="{'active' : currentLineNum === key}">{{value}}</li> -->
+          <li v-for="(value, key) in currentLyric" :key="key">{{value}}</li>
         </ul>
       </ScrollView>
     </swiper-slide>
@@ -49,7 +49,8 @@ export default {
   computed: {
     ...mapGetters([
       'isPlaying',
-      'currentSong'
+      'currentSong',
+      'currentLyric'
     ])
   },
   watch: {
@@ -58,6 +59,13 @@ export default {
         this.$refs.cdWarpper.classList.add("active")
       } else {
         this.$refs.cdWarpper.classList.remove("active")
+      }
+    }
+  },
+  methods: {
+    getFirstLyric () {
+      for (let key in this.currentLyric) {
+        return this.currentLyric[key]
       }
     }
   }
@@ -73,6 +81,7 @@ export default {
     bottom: 250px;
     left: 0;
     right: 0;
+    overflow: hidden;
     .cd {
       .cd-wrapper {
         display: block;
@@ -106,7 +115,7 @@ export default {
         @include font_color();
         margin: 10px 0;
         &:last-of-type{
-          padding-bottom: 50%;
+          padding-bottom: 20%;
         }
         &.active{
           color: #fff;

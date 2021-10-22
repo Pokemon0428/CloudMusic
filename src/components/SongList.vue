@@ -1,6 +1,6 @@
 <template>
   <ul class="song-list">
-    <li v-for="value in songs" :key="value.id" class="item" @click="selectMusic">
+    <li v-for="value in songs" :key="value.id" class="item" @click="selectMusic(value.id)">
       <img v-lazy=value.picUrl alt="">
       <div>
         <h3>{{value.name}}</h3>
@@ -35,10 +35,13 @@ export default {
 
   methods: {
     ...mapActions([
-      'setFullScreen'
+      'setFullScreen',
+      'setSongDetail',
+      'setMiniPlayer'
     ]),
-    selectMusic () {
+    selectMusic (id) {
       this.setFullScreen(true)
+      this.setSongDetail([id])
     }
   },
 };

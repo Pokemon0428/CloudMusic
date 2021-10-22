@@ -7,10 +7,10 @@
     <div class="mini-player" v-show="this.isShowMiniPlayer">
     <div class="player-warpper">
       <div class="player-left" @click="showNormalPlayer">
-        <img src="https://wx3.sinaimg.cn/orj360/001R0E0aly1gvkgcgpuz7j612y0u07de02.jpg" ref="cd">
+        <img :src="this.currentSong.picUrl" ref="cd">
         <div class="player-title">
-          <h3>演员</h3>
-          <p>薛之谦</p>
+          <h3>{{currentSong.name}}</h3>
+          <p>{{currentSong.singer}}</p>
         </div>
       </div>
       <div class="player-right">
@@ -63,7 +63,8 @@ export default {
   computed: {
     ...mapGetters([
       'isShowMiniPlayer',
-      'isPlaying'
+      'isPlaying',
+      'currentSong'
     ])
   },
   watch: {
@@ -113,7 +114,7 @@ export default {
         .player-title {
           display: flex;
           justify-content: center;
-          align-items: center;
+          // align-items: center;
           flex-direction: column;
           h3{
             @include font_size($font_medium);
