@@ -1,6 +1,6 @@
 <template>
   <ul class="song-list">
-    <li v-for="value in songs" :key="value.id" class="item">
+    <li v-for="value in songs" :key="value.id" class="item" @click="selectMusic(value.id)">
       <img v-lazy=value.picUrl alt="">
       <div>
         <h3>{{value.name}}</h3>
@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'SongList',
 
@@ -33,7 +34,15 @@ export default {
   },
 
   methods: {
-    
+    ...mapActions([
+      'setFullScreen',
+      'setSongDetail',
+      'setMiniPlayer'
+    ]),
+    selectMusic (id) {
+      this.setFullScreen(true)
+      this.setSongDetail([id])
+    }
   },
 };
 </script>

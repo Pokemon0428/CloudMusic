@@ -4,7 +4,7 @@
       <h3>{{title}}</h3>
     </div>
     <div class="personalized-list">
-      <div class="item" v-for="value in personalized" :key=value.id>
+      <div class="item" v-for="value in personalized" :key=value.id @click="selectItem(value.id)">
         <img v-lazy=value.picUrl alt="">
         <p>{{value.name}}</p>
       </div>
@@ -34,6 +34,12 @@ export default {
       default: '' ,
       // 定义该 prop 是否是必填项
       required: true
+    },
+    type: {
+      type: String,
+      default: '' ,
+      // 定义该 prop 是否是必填项
+      required: true
     }
   },
 
@@ -42,14 +48,16 @@ export default {
   },
 
   methods: {
-    
+    selectItem(id) {
+      this.$emit('select', id, this.type)
+    }
   },
 };
 </script>
 
 <style lang="scss" scoped>
-  @import "../assets/css/variable.scss";
-  @import "../assets/css/mixin.scss";
+  @import "../../assets/css/variable.scss";
+  @import "../../assets/css/mixin.scss";
   .personalized {
     @include bg_sub_color();
     .personalized-top {
