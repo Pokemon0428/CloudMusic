@@ -63,10 +63,25 @@ export default {
       state.songs = []
     }
 
+    if (index < state.currentIndex) {
+      state.currentIndex -= 1
+    }
+
     if (state.songs.length === 0) {
       state.isFullScreen = false
       state.isShowMiniPlayer = false
       state.isShowListPlayer = false
     }
+  },
+  [SET_CURRENT_INDEX] (state, index) {
+    if (index < 0) {
+      index = state.songs.length - 1
+    } else if (index > state.songs.length - 1) {
+      index = 0
+    }
+    state.currentIndex = index
+  },
+  [SET_CURRENT_TIME] (state, time) {
+    state.curTime = time
   },
 }

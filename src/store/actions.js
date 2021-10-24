@@ -80,12 +80,20 @@ export default {
     let result = await getSongLyric({ id: id })
     console.log(result)
     let obj = parseLyric(result.lrc.lyric)
-    // console.log(obj)
+    console.log(obj)
     commit(SET_SONG_LYRIC, obj)
   },
 
   setDelSong ({ commit }, index) {
     commit(SET_DEL_SONG, index)
+  },
+
+  setCurrentIndex ({ commit }, index) {
+    commit(SET_CURRENT_INDEX, index)
+  },
+
+  setCurrentTime ({ commit }, time) {
+    commit(SET_CURRENT_TIME, time)
   },
 }
 

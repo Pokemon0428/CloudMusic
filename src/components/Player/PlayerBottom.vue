@@ -1,19 +1,19 @@
 <template>
   <div class="player-bottom">
     <div class="bottom-progress">
-      <span>00:00</span>
-      <div class="progress-bar">
-        <div class="progress-line">
+      <span ref="eleCurrentTime">00:00</span>
+      <div class="progress-bar" @click="progressClick" ref="progressBar">
+        <div class="progress-line" ref="progressLine">
           <div class="progress-dot"></div>
         </div>
       </div>
-      <span>00:00</span>
+      <span ref="eleTotalTime">00:00</span>
     </div>
     <div class="bottom-controll">
       <div class="mode loop" @click="mode" ref="mode"></div>
-      <div class="prev"></div>
+      <div class="prev" @click="prev"></div>
       <div class="play" @click="play" ref="play"></div>
-      <div class="next"></div>
+      <div class="next" @click="next"></div>
       <div class="favorite"></div>
     </div>
   </div>
@@ -24,21 +24,12 @@ import { mapGetters, mapActions } from 'vuex'
 import modeType from '../../store/modeType'
 export default {
   name: 'PlayerBottom',
-
-  data() {
-    return {
-      
-    };
-  },
-
-  mounted() {
-    
-  },
-
   methods: {
     ...mapActions([
       'setIsPlaying',
-      'setModeType'
+      'setModeType',
+      'setCurrentIndex',
+      'setCurrentTime'
     ]),
     play () {
       this.setIsPlaying(!this.isPlaying)
@@ -51,12 +42,57 @@ export default {
       } else if (this.modeType === modeType.random) {
         this.setModeType(modeType.loop)
       }
+    },
+    prev () {
+      this.setCurrentIndex(this.currentIndex - 1)
+    },
+    next () {
+      this.setCurrentIndex(this.currentIndex + 1)
+    },
+    formartTime (time) {
+      // 2.得到两个时间之间的差值(秒)
+      let differSecond = time
+      // 3.利用相差的总秒数 / 每一天的秒数 = 相差的天数
+      let day = Math.floor(differSecond / (60 * 60 * 24))
+      day = day >= 10 ? day : '0' + day
+      // 4.利用相差的总秒数 / 小时 % 24;
+      let hour = Math.floor(differSecond / (60 * 60) % 24)
+      hour = hour >= 10 ? hour : '0' + hour
+      // 5.利用相差的总秒数 / 分钟 % 60;
+      let minute = Math.floor(differSecond / 60 % 60)
+      minute = minute >= 10 ? minute : '0' + minute
+      // 6.利用相差的总秒数 % 秒数
+      let second = Math.floor(differSecond % 60)
+      second = second >= 10 ? second : '0' + second
+      return {
+        day: day,
+        hour: hour,
+        minute: minute,
+        second: second
+      }
+    },
+    progressClick (e) {
+      // 1.计算进度条的位置
+      // let normalLeft = e.target.offsetLeft
+      let normalLeft = this.$refs.progressBar.offsetLeft
+      let eventLeft = e.pageX
+      let clickLeft = eventLeft - normalLeft
+      // let progressWidth = e.target.offsetWidth
+      let progressWidth = this.$refs.progressBar.offsetWidth
+      let value = clickLeft / progressWidth
+      this.$refs.progressLine.style.width = value * 100 + '%'
+
+      // 2.计算当前应该从什么地方开始播放
+      let currentTime = this.totalTime * value
+      // console.log(currentTime)
+      this.setCurrentTime(currentTime)
     }
   },
   computed: {
     ...mapGetters([
       'isPlaying',
-      'modeType'
+      'modeType',
+      'currentIndex'
     ])
   },
   watch: {
@@ -78,7 +114,31 @@ export default {
         this.$refs.mode.classList.remove('one')
         this.$refs.mode.classList.add('random')
       }
+    },
+    totalTime (newValue, oldValue) {
+      let time = this.formartTime(newValue)
+      this.$refs.eleTotalTime.innerHTML = time.minute + ':' + time.second
+    },
+    currentTime (newValue, oldValue) {
+      // 1.格式化当前播放的时间
+      let time = this.formartTime(newValue)
+      this.$refs.eleCurrentTime.innerHTML = time.minute + ':' + time.second
+      // 2.根据当前播放的时间计算比例
+      let value = newValue / this.totalTime * 100
+      this.$refs.progressLine.style.width = value + '%'
     }
+  },
+  props: {
+    totalTime: {
+      type: Number,
+      default: 0,
+      required: true
+    },
+    currentTime: {
+      type: Number,
+      default: 0,
+      required: true
+    },
   }
 };
 </script>
@@ -106,18 +166,18 @@ export default {
         margin: 0 10px;
         height: 10px;
         background: #fff;
-        position: relative;
         .progress-line {
-          width: 50%;
+          width: 0%;
           height: 100%;
           background: #ccc;
+          position: relative;
           .progress-dot {
             position: absolute;
             width: 20px;
             height: 20px;
             border-radius: 50%;
             background: #fff;
-            left: 50%;
+            left: 100%;
             top: 50%;
             transform: translateY(-50%);
           }

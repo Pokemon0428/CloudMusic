@@ -1,9 +1,9 @@
 <template>
   <div class="player">
-    <NormalPlayer></NormalPlayer>
+    <NormalPlayer :totalTime="totalTime" :currentTime="currentTime"></NormalPlayer>
     <MiniPlayer></MiniPlayer>
     <ListPlayer></ListPlayer>
-    <audio  :src="currentSong.url" ref="audio"></audio>
+    <audio  :src="currentSong.url" ref="audio" @timeupdate="timeupdate" @ended="ended"></audio>
   </div>
 </template>
 
@@ -24,8 +24,74 @@ export default {
   computed: {
     ...mapGetters([
       'currentSong',
+      'isPlaying',
+      'currentIndex',
+      'curTime',
+      'modeType',
+      'songs'
     ])
   },
+  methods: {
+    ...mapActions ([
+      'setCurrentIndex',
+      'setFavoriteList',
+      'setHistorySong',
+      'setHistoryList'
+    ]),
+    timeupdate (e) {
+      // console.log(e.target.currentTime)
+      this.currentTime = e.target.currentTime
+    },
+    ended () {
+      if (this.modeType === mode.loop) {
+        this.setCurrentIndex(this.currentIndex + 1)
+      } else if (this.modeType === mode.one) {
+        this.$refs.audio.play()
+      } else if (this.modeType === mode.random) {
+        let index = this.getRandomIntInclusive(0, this.songs.length - 1)
+        this.setCurrentIndex(index)
+      }
+    },
+    getRandomIntInclusive (min, max) {
+      min = Math.ceil(min)
+      max = Math.floor(max)
+      return Math.floor(Math.random() * (max - min + 1)) + min // 含最大值，含最小值
+    }
+  },
+  watch: {
+    isPlaying (newValue, oldValue) {
+      if (newValue) {
+        this.$refs.audio.play()
+      } else {
+        this.$refs.audio.pause()
+      }
+    },
+    currentIndex (newValue, oldValue) {
+      this.$refs.audio.oncanplay = () => {
+        this.totalTime = this.$refs.audio.duration
+        if (this.isPlaying) {
+          this.$refs.audio.play()
+        } else {
+          this.$refs.audio.pause()
+        }
+      }
+    },
+    curTime (newValue, oldValue) {
+      this.$refs.audio.currentTime = newValue
+    },
+  },
+  mounted() {
+    this.$refs.audio.ondurationchange = () => {
+      // console.log('执行了1')
+      this.totalTime = this.$refs.audio.duration
+    }
+  },
+  data () {
+    return {
+      totalTime: 0,
+      currentTime: 0
+    }
+  }
 };
 </script>
 

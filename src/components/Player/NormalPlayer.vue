@@ -8,7 +8,7 @@
     <div class="player-warpper">
       <PlayerHeader></PlayerHeader>
       <PlayerMiddle></PlayerMiddle>
-      <PlayerBottom></PlayerBottom>
+      <PlayerBottom :totalTime='totalTime' :currentTime="currentTime"></PlayerBottom>
     </div>
     <div class="player-bg">
       <img :src="currentSong.picUrl" alt="">
@@ -60,7 +60,20 @@ export default {
       if (newValue.id === undefined) {
         return
       }
+      console.log(newValue.id)
       this.getSongLyric(newValue.id)
+    }
+  },
+  props: {
+    totalTime: {
+      type: Number,
+      default: 0,
+      required: true
+    },
+    currentTime: {
+      type: Number,
+      default: 0,
+      required: true
     }
   }
 };
