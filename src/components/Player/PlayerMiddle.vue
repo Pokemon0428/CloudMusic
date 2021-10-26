@@ -10,7 +10,7 @@
     <swiper-slide class="lyric" ref="lyric">
       <ScrollView ref="scrollView">
         <ul>
-          <li v-for="(value, key) in currentLyric" :key="key">{{value}}</li>
+          <li v-for="(value, key) in currentLyric" :key="key" :class="{'active': currentLineNum === key}">{{value}}</li>
         </ul>
       </ScrollView>
     </swiper-slide>
@@ -44,6 +44,7 @@ export default {
         observeParents: true,
         observeSlideChildren: true
       },
+      currentLineNum: 0
     };
   },
   computed: {
@@ -60,6 +61,14 @@ export default {
       } else {
         this.$refs.cdWarpper.classList.remove("active")
       }
+    },
+    currentTime(newValue, oldValue) {
+      let lineNum = Math.floor(newValue) + ''
+      let result = this.currentLyric[lineNum]
+      console.log(result)
+      if (result !== undefined && result !== '') {
+        this.currentLineNum = lineNum
+      }
     }
   },
   methods: {
@@ -67,6 +76,13 @@ export default {
       for (let key in this.currentLyric) {
         return this.currentLyric[key]
       }
+    }
+  },
+  props: {
+    currentTime: {
+      type: Number,
+      default: 0,
+      required: true
     }
   }
 };
