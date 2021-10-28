@@ -104,6 +104,14 @@ export default {
   setFavoriteList ({ commit }, list) {
     commit(SET_FAVORITE_LIST, list)
   },
+
+  setHistorySong ({ commit }, song) {
+    commit(SET_HISTORY_SONG, song)
+  },
+  
+  setHistoryList ({ commit }, list) {
+    commit(SET_HISTORY_LIST, list)
+  },
 }
 
 // 格式化歌词方法

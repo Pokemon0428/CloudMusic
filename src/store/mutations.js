@@ -95,4 +95,18 @@ export default {
   [SET_FAVORITE_LIST] (state, list) {
     state.favoriteList = list
   },
+  [SET_HISTORY_SONG]  (state, song) {
+    let result = state.historyList.find(function (currentValue) {
+      return currentValue.id === song.id
+    })
+    if (result === undefined) {
+      if (state.historyList.length > 30) {
+        state.historyList.splice(0, 1)
+      }
+      state.historyList.push(song)
+    }
+  },
+  [SET_HISTORY_LIST]  (state, list) {
+    state.historyList = list
+  },
 }
