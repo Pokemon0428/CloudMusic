@@ -49,6 +49,7 @@ export default {
     let result = await getSongDetail({ids: ids.join(',')})
     let urls = await getSongURL({ id: ids.join(',') })
     console.log(result)
+    console.log(urls)
     let list = []
     result.songs.forEach(function (value) {
       let obj = {}
@@ -94,6 +95,14 @@ export default {
 
   setCurrentTime ({ commit }, time) {
     commit(SET_CURRENT_TIME, time)
+  },
+
+  setFavoriteSong ({ commit }, song) {
+    commit(SET_FAVORITE_SONG, song)
+  },
+  
+  setFavoriteList ({ commit }, list) {
+    commit(SET_FAVORITE_LIST, list)
   },
 }
 

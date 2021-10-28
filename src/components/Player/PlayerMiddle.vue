@@ -63,11 +63,41 @@ export default {
       }
     },
     currentTime(newValue, oldValue) {
+      /*
+      // 1.高亮歌词同步
       let lineNum = Math.floor(newValue) + ''
       let result = this.currentLyric[lineNum]
-      console.log(result)
+      // console.log(result)
       if (result !== undefined && result !== '') {
         this.currentLineNum = lineNum
+        // 2.歌词滚动同步
+        if (document.querySelector('.lyric .active')) {
+          let currentLyricTop = document.querySelector('.lyric .active').offsetTop
+          let lyricHeight = this.$refs.lyric.$el.offsetHeight
+          if (currentLyricTop > lyricHeight/2) {
+            this.$refs.scrollView.scrollTo(0, lyricHeight / 2 - currentLyricTop, 100)
+          }
+        }
+      }
+      */
+      // 1.高亮歌词同步
+      let lineNum = Math.floor(newValue)
+      this.currentLineNum = this.getActiveLineNum(lineNum)
+      // 2.歌词滚动同步
+      if (document.querySelector('.lyric .active')) {
+        let currentLyricTop = document.querySelector('.lyric .active').offsetTop
+        let lyricHeight = this.$refs.lyric.$el.offsetHeight
+        if (currentLyricTop > lyricHeight / 2) {
+          this.$refs.scrollView.scrollTo(0, lyricHeight / 2 - currentLyricTop, 100)
+        } else {
+          this.$refs.scrollView.scrollTo(0, 0, 100)
+        }
+      }
+    },
+    currentLyric (newValue, oldValue) {
+      for (let key in newValue) {
+        this.currentLineNum = key
+        return
       }
     }
   },
@@ -75,6 +105,18 @@ export default {
     getFirstLyric () {
       for (let key in this.currentLyric) {
         return this.currentLyric[key]
+      }
+    },
+    getActiveLineNum (lineNum) {
+      if (lineNum < 0) {
+        return this.currentLineNum
+      }
+      let result = this.currentLyric[lineNum]
+      if (result === undefined || result === '') {
+        lineNum--
+        return this.getActiveLineNum(lineNum)
+      } else {
+        return lineNum + ''
       }
     }
   },
@@ -131,7 +173,7 @@ export default {
         @include font_color();
         margin: 10px 0;
         &:last-of-type{
-          padding-bottom: 20%;
+          padding-bottom: 50%;
         }
         &.active{
           color: #fff;

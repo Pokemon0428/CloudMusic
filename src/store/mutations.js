@@ -84,4 +84,15 @@ export default {
   [SET_CURRENT_TIME] (state, time) {
     state.curTime = time
   },
+  [SET_FAVORITE_SONG]  (state, song) {
+    let result = state.favoriteList.find(function (currentValue) {
+      return currentValue.id === song.id
+    })
+    if (result === undefined) {
+      state.favoriteList.push(song)
+    }
+  },
+  [SET_FAVORITE_LIST] (state, list) {
+    state.favoriteList = list
+  },
 }

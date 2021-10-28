@@ -15,17 +15,6 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Detailbottom',
-
-  data() {
-    return {
-      
-    };
-  },
-
-  mounted() {
-    
-  },
-
   methods: {
     ...mapActions([
       'setFullScreen',
