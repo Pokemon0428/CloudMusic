@@ -97,12 +97,10 @@ export default {
   },
   created() {
     let favoriteList = getLocalStorage("favoriteList")
-    if (favoriteList === null)  { return }
-    this.setFavoriteList(favoriteList)
+    if (favoriteList !== null)  { this.setFavoriteList(favoriteList) }
 
     let historyList = getLocalStorage("historyList")
-    if (historyList === null)  { return }
-    this.setFavoriteList(historyList)
+    if (historyList !== null)  { this.setHistoryList(historyList) }
   },
   mounted() {
     this.$refs.audio.ondurationchange = () => {

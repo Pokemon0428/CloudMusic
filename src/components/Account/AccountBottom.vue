@@ -1,26 +1,32 @@
 <template>
-  <div class="account-bottom">
-    <div class="bottom-play" @click="selectAllMusic">
-      <span></span>
-      <span>播放全部</span>
+    <div class="account-bottom">
+      <div class="bottom-play" @click="selectAllMusic">
+        <span></span>
+        <span>播放全部</span>
+      </div>
+      <div class="bottom-wrapper">
+        <ScrollView>
+          <SongList :songs="switchNum === 0 ? favoriteList : historyList"></SongList>
+        </ScrollView>
+      </div>
     </div>
-    <div class="bottom-warpper">
-      <ScrollView>
-        <SongListItem :songs="switchNum === 0 ? favoriteList : historyList"></SongListItem>
-      </ScrollView>
-    </div>
-  </div>
 </template>
 
 <script>
 import ScrollView from '../ScrollView'
-import SongListItem from '../SongList'
+import SongList from '../SongList'
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
-  name: "AccountBottom",
+  name: 'AccountBottom',
   components: {
     ScrollView,
-    SongListItem
+    SongList
+  },
+  computed: {
+    ...mapGetters([
+      'favoriteList',
+      'historyList'
+    ])
   },
   props: {
     switchNum: {
@@ -28,12 +34,6 @@ export default {
       default: 0,
       required: true
     }
-  },
-  computed: {
-    ...mapGetters([
-      'favoriteList',
-      'historyList'
-    ])
   },
   methods: {
     ...mapActions([
@@ -46,6 +46,7 @@ export default {
     ]),
     selectAllMusic () {
       // let ids = []
+      console.log(this.historyList)
       if (this.switchNum === 0) {
         // ids = this.favoriteList.map(function (item) {
         //   return item.id
@@ -62,43 +63,52 @@ export default {
       this.setFullScreen(true)
       this.setCurrentIndex(0)
     }
-  },
+  }
 }
 </script>
 
-<style lang="scss" scoped>
-  @import "../../assets/css/variable.scss";
-  @import "../../assets/css/mixin.scss";
-  .account-bottom {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 100px;
-    bottom: 0;
-    // background: skyblue;
-    .bottom-play {
-      width: 260px;
-      height: 60px;
-      margin: 20px auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 1px solid #000;
-      @include border_color();
-      border-radius: 30px;
-      span {
-        display: inline-block;
-        &:nth-of-type(1){
-          width: 46px;
-          height: 46px;
-          @include bg_img('../../assets/images/small_play');
-          margin-right: 20px;
-        }
-        &:nth-of-type(2){
-          @include font_color();
-          @include font_size($font_medium_s);
-        }
+<style scoped lang="scss">
+  @import "../../assets/css/variable";
+  @import "../../assets/css/mixin";
+.account-bottom{
+  position: fixed;
+  top: 100px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  /*background: skyblue;*/
+  .bottom-play{
+    width: 260px;
+    height: 60px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #000;
+    @include border_color();
+    border-radius: 30px;
+    span{
+      display: inline-block;
+      &:nth-of-type(1){
+        width: 46px;
+        height: 46px;
+        @include bg_img('../../assets/images/small_play');
+        margin-right: 20px;
+      }
+      &:nth-of-type(2){
+        @include font_color();
+        @include font_size($font_medium_s);
       }
     }
   }
-</style>>
+  .bottom-wrapper{
+    position: fixed;
+    top: 200px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /*background: pink;*/
+    overflow: hidden;
+  }
+}
+</style>

@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import fastclick from 'fastclick'
 import VueLazyload from 'vue-lazyload'
-import VConsole from 'vconsole'
+// import VConsole from 'vconsole'
 import './assets/css/base.scss'
 
 Vue.use(VueLazyload, {
@@ -15,8 +15,8 @@ Vue.use(VueLazyload, {
 fastclick.attach(document.body)
 Vue.config.productionTip = false
 
-const vconsole = new VConsole()
-Vue.use(vconsole)
+// const vconsole = new VConsole()
+// Vue.use(vconsole)
 new Vue({
   router,
   store,
