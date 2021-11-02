@@ -14,7 +14,16 @@
       </ul>
     </ScrollView>
     <ul class="list-keys">
-      <li v-for="(key, index) in keys" :key="key" @click.stop="keyDown(index)" :class="{'active': currentIndex === index}">{{key}}</li>
+      <!-- <li v-for="(key, index) in keys" 
+          :key="key" @click.stop="keyDown(index)" 
+          :class="{'active': currentIndex === index}"
+      >{{key}}</li> -->
+      <li v-for="(key, index) in keys" 
+          :key="key"
+          :data-index="index" 
+          @touchstart.stop.prevent="touchstart" 
+          @touchmove.stop.prevent="touchmove" 
+          :class="{'active': currentIndex === index}">{{key}}</li>
     </ul>
   </div>
 </template>
@@ -42,7 +51,9 @@ export default {
       keys: [],
       list: [],
       groupsTop: [],
-      currentIndex: 0
+      currentIndex: 0,
+      beginOffsetY: 0,
+      moveOffsetY: 0,
     };
   },
   components: {
@@ -62,10 +73,27 @@ export default {
     }
   },
   methods: {
-    keyDown (index) {
+    _keyDown (index) {
       this.currentIndex = index
       let offsetY = this.groupsTop[index]
       this.$refs.scrollView.scrollTo(0, -offsetY)
+    },
+    touchstart (e) {
+      let index = parseInt(e.target.dataset.index)
+      this._keyDown(index)
+
+      this.beginOffsetY = e.touches[0].pageY
+    },
+    touchmove (e) {
+      this.moveOffsetY = e.touches[0].pageY
+      let offsetY = (this.moveOffsetY - this.beginOffsetY) / e.target.offsetHeight
+      let index = parseInt(e.target.dataset.index) + Math.floor(offsetY)
+      if (index < 0) {
+        index = 0
+      } else if (index > this.keys.length - 1) {
+        index = this.keys.length - 1
+      }
+      this._keyDown(index)
     }
   }
 };
@@ -125,9 +153,6 @@ export default {
         padding: 3px 0;
         text-align: center;
         &.active{
-          text-shadow: 0 0 10px #000;
-        }
-        &.active {
           text-shadow: 0 0 10px #000;
         }
       }
