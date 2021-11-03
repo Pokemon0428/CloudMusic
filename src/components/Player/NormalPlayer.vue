@@ -60,7 +60,7 @@ export default {
       if (newValue.id === undefined) {
         return
       }
-      console.log(newValue.id)
+      // console.log(newValue.id)
       this.getSongLyric(newValue.id)
     }
   },

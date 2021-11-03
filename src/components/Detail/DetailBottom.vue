@@ -15,15 +15,23 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Detailbottom',
+  computed: {
+    ...mapGetters([
+      'isPlaying',
+    ])
+  },
   methods: {
     ...mapActions([
       'setFullScreen',
       'setSongDetail',
-      'setMiniPlayer'
+      'setMiniPlayer',
+      'setIsPlaying',
     ]),
     selectMusic (id) {
       this.setFullScreen(true)
       this.setSongDetail([id])
+      this.setIsPlaying(true)
+      console.log(this.isPlaying)
     },
     selectAllMusic () {
       this.setFullScreen(true)
@@ -31,6 +39,7 @@ export default {
         return item.id
       })
       this.setSongDetail(ids)
+      this.setIsPlaying(true)
     }
   },
 

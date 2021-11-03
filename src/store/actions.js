@@ -48,8 +48,8 @@ export default {
   async setSongDetail ({ commit }, ids) {
     let result = await getSongDetail({ids: ids.join(',')})
     let urls = await getSongURL({ id: ids.join(',') })
-    console.log(result)
-    console.log(urls)
+    // console.log(result)
+    // console.log(urls)
     let list = []
     result.songs.forEach(function (value) {
       let obj = {}
@@ -79,9 +79,9 @@ export default {
 
   async getSongLyric ({ commit }, id) {
     let result = await getSongLyric({ id: id })
-    console.log(result)
+    // console.log(result)
     let obj = parseLyric(result.lrc.lyric)
-    console.log(obj)
+    // console.log(obj)
     commit(SET_SONG_LYRIC, obj)
   },
 

@@ -26,12 +26,6 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'MiniPlayer',
-
-  data() {
-    return {
-      
-    };
-  },
   methods: {
     ...mapActions([
       'setFullScreen',
