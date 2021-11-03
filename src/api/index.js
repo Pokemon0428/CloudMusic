@@ -78,7 +78,6 @@ export const getTopListDetail = () => {
         { name: '新歌榜', id: 3779629 },
         { name: '原创榜', id: 2884035 },
         { name: '热歌榜', id: 3778678 },
-        { name: '黑胶VIP爱听榜', id: 5453912201 }
       ],
       recList: [
         { name: '云音乐说唱榜', id: 991319590 },
@@ -100,7 +99,6 @@ export const getTopListDetail = () => {
         { name: 'Beatport全球电子舞曲榜', id: 3812895 },
         { name: '日本Oricon榜', id: 60131 },
         { name: '俄罗斯top hit流行音乐榜', id: 6939992364 },
-        { name: '中国新乡村音乐排行榜', id: 3112516681 },
         { name: '云音乐日语榜', id: 5059644681 },
         { name: '云音乐欧美热歌榜', id: 2809513713 },
         { name: '云音乐欧美新歌榜', id: 2809577409 },
@@ -114,6 +112,8 @@ export const getTopListDetail = () => {
         { name: '潜力爆款榜', id: 5338990334 },
         { name: '听歌识曲榜', id: 6688069460 },
         { name: '网络热歌榜', id: 6723173524 },
+        { name: '黑胶VIP爱听榜', id: 5453912201 },
+        { name: '中国新乡村音乐排行榜', id: 3112516681 },
       ],
       titles: { officialList: '官方榜', recList: '推荐榜', globalList: '全球榜', otherList: '更多榜单' }
     }
