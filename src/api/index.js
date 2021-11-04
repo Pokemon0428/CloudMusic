@@ -69,7 +69,6 @@ export const getAllArtists = (letter) => {
       })
   })
 }
-
 export const getTopListDetail = () => {
   return new Promise(function (resolve, reject) {
     let category = {
@@ -119,6 +118,7 @@ export const getTopListDetail = () => {
     }
     Network.get('toplist/detail')
       .then(function (data) {
+        console.log(data)
         data.list.forEach(function (obj) {
           let flag = false
           for (let key in category) {
@@ -141,3 +141,6 @@ export const getTopListDetail = () => {
       })
   })
 }
+export const getTopList = (data) => Network.get('top/list', data)
+export const getSearchList = (data) => Network.get('search?type=1', data)
+export const getSearchHot = () => Network.get('search/hot')

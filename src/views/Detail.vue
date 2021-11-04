@@ -16,7 +16,7 @@ import DetailTop from '../components/Detail/DetailTop'
 import DetailBottom from '../components/Detail/DetailBottom'
 import ScrollView from '../components/ScrollView.vue'
 
-import {getPlayList, getAlbum, getArtistsSongs} from "../api/index"
+import {getPlayList, getAlbum, getArtistsSongs, getTopList } from "../api/index"
 export default {
   name: 'Detail',
 
@@ -61,7 +61,20 @@ export default {
         .catch((err) => {
           console.log(err)
         })
-    }
+    } else if (this.$route.params.type === 'rank') {
+      getTopList({ id: this.$route.params.id })
+        .then((data) => {
+          console.log(data)
+          this.playlist = {
+            name: data.playlist.name,
+            coverImgUrl: data.playlist.creator.backgroundUrl,
+            tracks: data.playlist.tracks
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    } 
   },
 
   mounted() {
