@@ -6,6 +6,11 @@ import fastclick from 'fastclick'
 import VueLazyload from 'vue-lazyload'
 // import VConsole from 'vconsole'
 import './assets/css/base.scss'
+import Loading from './plugin/loading/index'
+
+Vue.use(Loading, {
+  title: '正在加载...'
+})
 
 Vue.use(VueLazyload, {
   // 可以通过配置loading来设置图片还未加载好之前的占位图片
