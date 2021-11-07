@@ -39,7 +39,7 @@ export default {
   @import "../assets/css/variable.scss";
   @import "../assets/css/mixin.scss";
   .tabbar {
-    widows: 100%;
+    width: 100%;
     height: 84px;
     @include bg_sub_color();
     display: flex;
